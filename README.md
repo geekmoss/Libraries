@@ -10,6 +10,7 @@ Aktuálně obsaženo:
 - Messages
 - Session
 - Database (PDO)
+- Upload
 
 Připravováno:
 - UserManager
