@@ -1,4 +1,4 @@
-# Libraries - Knihovčničky
+# Libraries - Knihovničky
 
 [CZ]
 
