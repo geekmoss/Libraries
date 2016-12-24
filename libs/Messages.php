@@ -7,13 +7,13 @@
  */
 class Messages {
     /** @const string Konstanta označující chybové oznámení */
-    const BOOTSTRAP_ERROR = 'aletr alert-danger';
+    const BOOTSTRAP_ERROR = 'alert alert-danger';
     /** @var string Konstanta označující infomační oznámení */
-    const BOOTSTRAP_INFO = 'aletr alert-info';
+    const BOOTSTRAP_INFO = 'alert alert-info';
     /** @var string Konstanta označující oznámení o úspěchu */
-    const BOOTSTRAP_SUCCESS = 'aletr alert-success';
+    const BOOTSTRAP_SUCCESS = 'alert alert-success';
     /** @var string Konstanta označující varovné oznámení */
-    const BOOTSTRAP_WARNING = 'aletr alert-warning';
+    const BOOTSTRAP_WARNING = 'alert alert-warning';
 
     /** @var string Sekce v SESSION vyhrazená pro Notifications */
     private $section = 'Lib_Notification';
