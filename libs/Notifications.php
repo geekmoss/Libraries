@@ -5,7 +5,7 @@
  *
  * Rozšířeno o možnot dodat název CSS třídy pro stylování různých typů oznámení.
  */
-class Messages {
+class Notifications {
     /** @const string Konstanta označující chybové oznámení */
     const BOOTSTRAP_ERROR = 'alert alert-danger';
     /** @var string Konstanta označující infomační oznámení */
