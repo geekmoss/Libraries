@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Třída Messages vytváří nástroj pro přidávání oznámení zobrazující se při následném načtení stránky
+ * Třída Notifications vytváří nástroj pro přidávání oznámení zobrazující se při následném načtení stránky
  *
  * Rozšířeno o možnot dodat název CSS třídy pro stylování různých typů oznámení.
  */
