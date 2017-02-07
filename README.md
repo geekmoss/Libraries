@@ -7,7 +7,7 @@ Jednoduché knihovničky usnadňující práci v PHP bez využívání framework
 Aktuálně obsaženo:
 - Get
 - Post
-- Messages
+- Notifications
 - Session
 - Database (PDO)
 - Upload
