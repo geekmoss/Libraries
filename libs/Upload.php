@@ -3,17 +3,50 @@
 /**
  * Třída pro nahrávání souborů libovolného typu
  *
- * Prozatím nepodporovaný multiupload
+ * @author J. Janeček
  */
 class Upload {
 
     private $fileHandle;
+    private $multiple;
+    private $count = 1;
+
+    private $numFileHanhle = -1;
 
     /**
      * @param string $inputName Název formulářového vstupu
+     * @param bool   $isMultiple Zda-li se může nahrávat více jak jeden soubor
      */
-    public function __construct($inputName) {
+    public function __construct($inputName, $isMultiple = false) {
         $this->fileHandle = (object)$_FILES[$inputName];
+        $this->multiple = $isMultiple;
+        if ($isMultiple) {
+            $this->count = sizeof($_FILES[$inputName]['name']);
+        }
+    }
+
+    /**
+     * Vrací počet nahraných souborů
+     *
+     * @return int
+     */
+    public function getCountFiles() {
+        return $this->count;
+    }
+
+    /**
+     * Multiupload: Načte další soubor; Vrací false pokud již nejsou další soubory
+     *
+     * @return bool
+     */
+    public function nextFile() {
+        $this->numFileHanhle++;
+        if ($this->numFileHanhle+1 > $this->count) {
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 
     /**
@@ -22,11 +55,21 @@ class Upload {
      * @return bool
      */
     public function isOk() {
-        if ($this->fileHandle->error == UPLOAD_ERR_OK AND filesize($this->fileHandle->tmp_name) == $this->fileHandle->size) {
-            return true;
+        if ($this->multiple) {
+            if ($this->fileHandle->error[$this->numFileHanhle] == UPLOAD_ERR_OK AND filesize($this->fileHandle->tmp_name[$this->numFileHanhle]) == $this->fileHandle->size[$this->numFileHanhle]) {
+                return true;
+            }
+            else {
+                return false;
+            }
         }
         else {
-            return false;
+            if ($this->fileHandle->error == UPLOAD_ERR_OK AND filesize($this->fileHandle->tmp_name) == $this->fileHandle->size) {
+                return true;
+            }
+            else {
+                return false;
+            }
         }
     }
 
@@ -36,7 +79,12 @@ class Upload {
      * @return mixed
      */
     public function getExtension() {
-        return pathinfo($this->fileHandle->name, PATHINFO_EXTENSION);
+        if ($this->multiple) {
+            return pathinfo($this->fileHandle->name[$this->numFileHanhle], PATHINFO_EXTENSION);
+        }
+        else {
+            return pathinfo($this->fileHandle->name, PATHINFO_EXTENSION);
+        }
     }
 
     /**
@@ -45,7 +93,12 @@ class Upload {
      * @return mixed
      */
     public function getType() {
-        return $this->fileHandle->type;
+        if ($this->multiple) {
+            return $this->fileHandle->type[$this->numFileHanhle];
+        }
+        else {
+            return $this->fileHandle->type;
+        }
     }
 
     /**
@@ -54,7 +107,12 @@ class Upload {
      * @return mixed
      */
     public function getName() {
-        return $this->fileHandle->name;
+        if ($this->multiple) {
+            return $this->fileHandle->name[$this->numFileHanhle];
+        }
+        else {
+            return $this->fileHandle->name;
+        }
     }
 
     /**
@@ -63,7 +121,12 @@ class Upload {
      * @return mixed
      */
     public function getSize() {
-        return $this->fileHandle->size;
+        if ($this->multiple) {
+            return $this->fileHandle->size[$this->numFileHanhle];
+        }
+        else {
+            return $this->fileHandle->size;
+        }
     }
 
     /**
@@ -74,6 +137,11 @@ class Upload {
      * @return bool
      */
     public function saveUploadedFile($where) {
-        return move_uploaded_file($this->fileHandle->tmp_name, $where);
+        if ($this->multiple) {
+            return move_uploaded_file($this->fileHandle->tmp_name[$this->numFileHanhle], $where);
+        }
+        else {
+            return move_uploaded_file($this->fileHandle->tmp_name, $where);
+        }
     }
 }
